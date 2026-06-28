@@ -35,6 +35,9 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
+# Set the DocumentRoot to the public folder
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
 # Set environment variables
 ENV APP_ENV production
 ENV APP_DEBUG false
