@@ -6,6 +6,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Copy application files
 COPY . .
 
+# Install dependencies DURING BUILD
+RUN composer install --no-dev --no-interaction --prefer-dist
+
 # Set environment variables
 ENV SKIP_COMPOSER 0
 ENV WEBROOT /var/www/html/public

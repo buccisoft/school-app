@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "Installing Composer dependencies..."
-composer install --no-dev --no-interaction --prefer-dist --working-dir=/var/www/html
-
 echo "Generating application key..."
 php artisan key:generate --force --no-interaction
 
