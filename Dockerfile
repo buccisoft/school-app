@@ -21,6 +21,17 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
+# Set temp directory
+ENV TMPDIR=/tmp
+
+# Create temp directory and storage directories
+RUN mkdir -p /tmp \
+    && mkdir -p storage/framework/views \
+    && mkdir -p storage/framework/cache \
+    && mkdir -p storage/framework/sessions \
+    && chown -R www-data:www-data storage \
+    && chmod -R 775 storage
+
 # Copy application files
 COPY . .
 
