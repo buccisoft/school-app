@@ -27,18 +27,13 @@ COPY . .
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions for storage and bootstrap/cache
-RUN chown -R www-data:www-data /var/www/html/storage \
-    && chown -R www-data:www-data /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
-
 # Configure Apache to serve from public folder
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
 # Set environment variables
 ENV APP_ENV production
 ENV APP_DEBUG false
+ENV LOG_CHANNEL stderr
 
 # Make start script executable
 RUN chmod +x /var/www/html/start.sh
