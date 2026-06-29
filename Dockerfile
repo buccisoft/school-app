@@ -1,9 +1,10 @@
 FROM php:8.3-apache
 
-# Install system dependencies
+# Install system dependencies (including libcurl)
 RUN apt-get update && apt-get install -y \
     git \
     curl \
+    libcurl4-openssl-dev \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
@@ -32,6 +33,10 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # Configure Apache to serve from public folder
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
+# Set environment variables
+ENV APP_ENV production
+ENV APP_DEBUG false
 
 EXPOSE 80
 CMD ["apache2-foreground"]
