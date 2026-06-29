@@ -1,6 +1,6 @@
 FROM php:8.3-apache
 
-# Install system dependencies (including libcurl)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -38,5 +38,10 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 ENV APP_ENV production
 ENV APP_DEBUG false
 
+# Make start script executable
+RUN chmod +x /var/www/html/start.sh
+
 EXPOSE 80
-CMD ["apache2-foreground"]
+
+# Use the start script
+CMD ["/var/www/html/start.sh"]
